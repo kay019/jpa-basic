@@ -1,12 +1,14 @@
 package hellojpa;
 
+import org.hibernate.FlushMode;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMain {
+public class JpaFlush {
 
     public static void main(String[] args){
 
@@ -22,10 +24,26 @@ public class JpaMain {
 
         // 정석
         try{
+            //code
 
-            //준영속
+            //flush -> dirty checking -> sql update
+
+            //em.flush(); - 직접
+            //transaction - 자동
+            //jpql - 자동
+
+            Member member = new Member(15L, "memberNew");
+            System.out.println("=============");
+            em.persist(member);
+            System.out.println("=============");
+//            em.flush();
+            System.out.println("=============");
+
+            //FlushModeType.AUTO - default - 권장
+            //FlushModeType.COMMIT - 커밋 시만 flush
 
 
+            //jpql 중간에 실행 시, persist에 저장된 것은 실행이 안됨 -> 실행 전 자동 실행시킴
 
 
             tx.commit();

@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMain {
+public class JpaUpdate {
 
     public static void main(String[] args){
 
@@ -22,20 +21,27 @@ public class JpaMain {
 
         // 정석
         try{
+            //code
 
-            //준영속
+            //update
+            Member findMember = em.find(Member.class, 1L); //pk 찾기
+            System.out.println("find Member.id = " + findMember.getId());
+            System.out.println("find Member.name = " + findMember.getName());
 
+            findMember.setName("HelloJPA");
 
-
+            //delete
+            //em.remove(findMember);
 
             tx.commit();
+
         }catch (Exception e){
             tx.rollback();
         } finally {
-            em.close(); //매니저가 내부적으로 물고 진행하기에 종료 시 닫아야 한다.
+            em.close();
         }
 
-        emf.close(); // 로직 종료시 닫는다.
+        emf.close();
 
 
     }

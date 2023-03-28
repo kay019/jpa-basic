@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMain {
+public class JpaSemiPersistent {
 
     public static void main(String[] args){
 
@@ -25,7 +24,20 @@ public class JpaMain {
 
             //준영속
 
+            //영속 상태
+            Member member = em.find(Member.class, 10L);
+            member.setName("AAAA"); // <- 더티 체킹
 
+            //jpa - 관리 안함
+            //em.detach(member); // 웹 개발 시 복잡할 때
+            em.clear(); //영속성 컨텐츠 전체 초기화
+            //테스트 케이스 작성시 눈으로 확인할 때 도움됨
+            System.out.println("=======");
+            Member member2 = em.find(Member.class, 10L);
+
+            System.out.println("=======");
+
+            //특정 상태 준영속 전환 - > detach
 
 
             tx.commit();

@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMain {
+public class JpaPersistent {
 
     public static void main(String[] args){
 
@@ -22,13 +21,24 @@ public class JpaMain {
 
         // 정석
         try{
+            //code
 
+
+            //비영속 상태
+            Member member = new Member();
+            member.setId(3L);
+            member.setName("비영속");
+
+            //영속 상태 - 저장 x
+            System.out.println("--- BEFORE ---");
+            em.persist(member);//1차 캐쉬에 저장 -> 조회
             //준영속
+            em.detach(member);
+            //삭제
+            em.remove(member);
+            System.out.println("--- AFTER ---");
 
-
-
-
-            tx.commit();
+            tx.commit(); //이 시점에서 커밋됨
         }catch (Exception e){
             tx.rollback();
         } finally {

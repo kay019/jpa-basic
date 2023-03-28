@@ -6,7 +6,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
 
-public class JpaMain {
+public class JpaJpql {
 
     public static void main(String[] args){
 
@@ -22,13 +22,21 @@ public class JpaMain {
 
         // 정석
         try{
-
-            //준영속
-
+            //code
 
 
+            //jpql
+            //List<Member> result = em.createQuery("select m from Member as m", Member.class).getResultList();
+            //객체 대상으로 조회 - 테이블이 아닌 객체 개념
 
-            tx.commit();
+            //paging
+            //시작값 ~ 최대값
+            List<Member> result = em.createQuery("select m from Member as m", Member.class).setFirstResult(1).setMaxResults(10).getResultList();
+
+            for(Member member : result){
+                System.out.println("member.name? == " + member.getName());
+            }
+
         }catch (Exception e){
             tx.rollback();
         } finally {

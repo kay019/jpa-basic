@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMain {
+public class JpaDirtyChecking {
 
     public static void main(String[] args){
 
@@ -22,12 +21,18 @@ public class JpaMain {
 
         // 정석
         try{
+            //code
 
-            //준영속
+            //jpa 목적 - 컬렉션 다루듯 데이터 다루는 것
+            Member member = em.find(Member.class, 10L); // 검색
+            member.setName("xxxx"); // 변경
 
+            //em.persist(member); <- 사용할 필요 없음 :: 호출하지 않는게 정답 : 값만 변경
+            //더티 체킹 = 변경 감지
+            System.out.println("=======================");
+            //commit -> flush -> snapshot(before) <-> entity(after)
 
-
-
+            //값을 바꾼 시점에 커밋이 되면 변경이 된다.
             tx.commit();
         }catch (Exception e){
             tx.rollback();

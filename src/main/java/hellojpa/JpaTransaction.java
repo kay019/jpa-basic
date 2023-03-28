@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMain {
+public class JpaTransaction {
 
     public static void main(String[] args){
 
@@ -22,11 +21,18 @@ public class JpaMain {
 
         // 정석
         try{
+            //code
+            //transaction
+            Member member1 = new Member(10L, "X_LOG");
+            Member member2 = new Member(11L, "Y_LOG");
 
-            //준영속
+            em.persist(member1);
+            em.persist(member2);
+            //jdbc 배치 - 실시간 쿼리에서는 이점은 없음
+            //버퍼링 기능 - 이점 : 옵션으로 성능을 가지고 쓸 수 있음
+            // 버퍼링을 모아서 한번에 라이트 가능
 
-
-
+            System.out.println("=======================");
 
             tx.commit();
         }catch (Exception e){

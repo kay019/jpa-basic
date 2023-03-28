@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class JpaMain {
+public class JpaInsert {
 
     public static void main(String[] args){
 
@@ -22,20 +21,26 @@ public class JpaMain {
 
         // 정석
         try{
+            //code
 
-            //준영속
+            //insert
+            Member member = new Member();
+            member.setId(2L);
+            member.setName("HelloB");
+            em.persist(member);
 
-
-
+            //delete
+            //em.remove(findMember);
 
             tx.commit();
+
         }catch (Exception e){
             tx.rollback();
         } finally {
-            em.close(); //매니저가 내부적으로 물고 진행하기에 종료 시 닫아야 한다.
+            em.close();
         }
 
-        emf.close(); // 로직 종료시 닫는다.
+        emf.close();
 
 
     }
